@@ -152,11 +152,10 @@
 // ---------- Global Album Shuffle ----------
 window.generateAlbumShuffle = async function(albumId) {
   try {
-    // Reset deck and audio state
+    // 1. Reset deck and audio state
     if (typeof window.stopDeck === 'function') {
-      window.stopDeck(); // sets spinning = false, pauses audio, deck paused
+      window.stopDeck();
     } else {
-      // fallback if stopDeck not defined
       const audio = document.getElementById('audio');
       if (audio) {
         try { audio.pause(); } catch (_) {}
@@ -168,7 +167,7 @@ window.generateAlbumShuffle = async function(albumId) {
       const deck = document.getElementById('deck');
       if (recordWrapper) recordWrapper.classList.remove('playing');
       if (deck) deck.classList.add('paused');
-      spinning = false; // force baseline
+      spinning = false;
     }
 
     // 2. Parse album info
@@ -187,7 +186,7 @@ window.generateAlbumShuffle = async function(albumId) {
     const shuffled = tracks.map(t => t.filePath || t).sort(() => Math.random() - 0.5);
     const textPayload = shuffled.join('\n');
 
-    // 5. Save shuffled setlist into album folder
+    // 5. Save shuffled setlist into album folder (new backend route: /api/albums/:artistId/:albumName/setlist-shuffle)
     await fetch(`/api/albums/${encodeURIComponent(artistId)}/${encodeURIComponent(albumName)}/setlist-shuffle`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -195,8 +194,8 @@ window.generateAlbumShuffle = async function(albumId) {
     });
 
     // 6. Update global state
-    window.currentMode = 'album';
-    window.currentSetlistFile = `/Vinly Setlist/${artistId}/${albumName}/setlist-shuffle.txt`;
+    window.currentMode = 'setlist'; // treat shuffle as a setlist file
+    window.currentSetlistFile = 'setlist-shuffle.txt'; // saved inside album folder
     window.currentSetlistCover = coverUrl;
     window.currentSetlistText = textPayload;
     window.currentSetlistShuffle = { artistId, albumName, coverUrl, ready: true };
@@ -217,7 +216,7 @@ window.generateAlbumShuffle = async function(albumId) {
       layer2.style.backgroundRepeat = 'no-repeat';
       layer2.style.backgroundPosition = 'center center';
       layer2.style.backgroundSize = 'cover';
-      layer2.classList.add('paused'); // keep paused until Start pressed
+      layer2.classList.add('paused');
     }
 
     // 8. Preload first track
@@ -239,9 +238,11 @@ window.generateAlbumShuffle = async function(albumId) {
     }
 
   } catch (err) {
+    console.error('Failed to shuffle album:', err);
     alert('Failed to shuffle album.');
   }
 };
+
 
   // ---------- Final global exposure ----------
   window.generateSetlistShuffle = typeof generateSetlistShuffle === 'function'
