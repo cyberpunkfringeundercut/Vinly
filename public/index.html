@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Vinyl Player</title>
+  <!-- Base styles -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="vinly-background.css" />
+  <link rel="stylesheet" href="vinly-ui.css" />
+  <link rel="stylesheet" href="vinly-lyrics.css" />
+  <!-- New carousel UI styles -->
+  <link rel="stylesheet" href="vinly-setlist-ui.css" />
+  <!-- Setlist styles -->
+  <link rel="stylesheet" href="vinly-setlist-ui1.css" />
+  <!-- Delete Setlist styles -->
+  <link rel="stylesheet" href="vinly-setlist-ui2.css" />
+  <!-- Delete Setlist styles -->
+  <link rel="stylesheet" href="vinly-setlist-ui3.css" />
+</head>
+<body>
+  <!-- Layer 1: Top strip with folder carousel and track info -->
+  <div id="layerTop">
+    <!-- Visual folder carousel -->
+    <div id="folderCarouselContainer">
+      <button id="swingLeft">←</button>
+      <div id="folderCarousel"></div>
+      <button id="swingRight">→</button>
+    </div>
+
+    <!-- Current track title beside the carousel -->
+    <div id="trackInfo">
+      <div id="currentTrack">No track playing</div>
+    </div>
+  </div>
+
+  <!-- Strip line separator -->
+  <div id="separator"></div>
+
+  <!-- Layer 2: Vinyl deck and controls -->
+  <div id="layerVinly">
+    <div id="deck">
+      <div id="recordWrapper">
+        <canvas id="recordCanvas" width="600" height="600"></canvas>
+        <!-- Cover art will be set dynamically -->
+        <img id="cover" />
+      </div>
+
+      <!-- Overlay aligned exactly to the recordWrapper box -->
+      <div id="overlay">
+        <div class="headshell"></div>
+        <div id="needle"></div>
+      </div>
+    </div>
+
+    <!-- Audio element -->
+    <audio id="audio"></audio>
+
+    <!-- Controls -->
+    <div id="controls">
+      <button id="powerBtn">Power</button>
+      <button id="startStopBtn">Start / Stop</button>
+      <label>
+        Pitch
+        <input id="pitchSlider" type="range" min="-10" max="10" value="0" step="0.1" />
+      </label>
+    </div>
+  </div>
+
+  <!-- Strip line separator below Layer 2 -->
+  <div id="separator"></div>
+
+<!-- Layer 3: Lyrics area -->
+<div id="layerLyrics">
+  <div id="lyricsOverlay">
+    <pre id="lyricsText">No lyrics loaded</pre>
+    <div id="lrcLyrics"></div>
+  </div>
+</div>
+
+  <!-- Scripts -->
+  <script src="vinly.js"></script>
+  <script src="vinly-background.js"></script>
+  <script src="vinly-lyrics.js"></script>
+  <!-- New setlist carousel logic -->
+  <script src="vinly-setlist.js"></script>
+
+<!-- Setlist -->
+<script src="vinly-setlist-ui1.js"></script>
+
+<!-- Delete Setlist -->
+<script src="vinly-setlist-ui2.js"></script>
+
+<!-- Setlist -->
+<script src="vinly-setlist-ui3.js"></script>
+
+<!-- Setlist Shuffle -->
+<script src="vinly-setlist-shuffle-ui1.js"></script>
+<script src="vinly-setlist-shuffle-ui2.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+/* ---------- Overlay for Delete Setlist ---------- */
+#overlaySetlistDelete.overlaySetlist {
+  /* same base overlay style as other overlays */
+}
+
+#overlaySetlistDelete .overlayPanel {
+  /* same panel style as Add / Load overlays */
+}
+
+#overlaySetlistDelete h3 {
+  margin: 0 0 8px 0;
+  color: #00ffe0;
+  font-weight: 700;
+  text-shadow: 0 0 6px rgba(0,255,224,0.6);
+}
+
+#overlaySetlistDelete .setlistListBox {
+  /* inherits from .setlistListBox */
+}
+
+#overlaySetlistDelete .setlistBtn {
+  /* inherits from .setlistBtn */
+}
+
+/* ---------- Context menu (Layer 1) with Delete option ---------- */
+.layerCtxMenu {
+  position: absolute;
+  display: none;
+  background: rgba(0,0,0,0.85);
+  border: 1px solid #00ffe0;
+  border-radius: 6px;
+  z-index: 9999;
+  overflow: hidden;
+  padding: 6px 0;
+  box-sizing: border-box;
+  min-width: 160px;
+  max-width: 90vw;
+}
+
+.layerCtxMenu button {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 6px 12px;
+  background: transparent;
+  color: #00ffe0;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: 'Orbitron','Segoe UI',sans-serif;
+  font-size: 14px;
+}
+
+.layerCtxMenu button:hover {
+  background: #00ffe0;
+  color: #111;
+}
+
+.layerCtxMenu button + button {
+  border-top: 1px solid rgba(0,255,224,0.15);
+}

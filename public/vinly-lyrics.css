@@ -1,0 +1,184 @@
+/* Layer 3 container */
+#layerLyrics {
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+  color: #e0e0e0;
+  overflow: hidden;
+}
+
+#lyricsText {
+  position: relative;
+  z-index: 2;
+  font-family: 'Orbitron', 'Segoe UI', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.9;
+  letter-spacing: 0.8px;
+  white-space: pre-wrap;
+  color: #000; /* solid black core */
+  background: transparent;
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+
+  overflow: visible;
+  max-height: none;
+
+  text-shadow:
+    0 0 3px #fff,                /* crisp white glow */
+    0 0 6px rgba(255,255,255,0.9), /* outer halo shine */
+    1px 1px 2px rgba(255,255,255,0.7), /* subtle highlight edge */
+    -1px -1px 2px rgba(255,255,255,0.7), /* opposite highlight */
+    2px 2px 3px rgba(0,0,0,0.9),   /* deep black outline for grit */
+    -2px -2px 3px rgba(0,0,0,0.8); /* opposite black outline */
+}
+
+.lyricLineBtn {
+  all: unset;                /* reset default button styles */
+  display: block;
+  width: 100%;
+  cursor: pointer;
+
+  /* Inherit normal lyric style */
+  font-family: 'Orbitron', 'Segoe UI', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.9;
+  letter-spacing: 0.8px;
+  color: #000;
+  text-shadow:
+    0 0 3px #fff,
+    0 0 6px rgba(255,255,255,0.9),
+    1px 1px 2px rgba(255,255,255,0.7),
+    -1px -1px 2px rgba(255,255,255,0.7),
+    2px 2px 3px rgba(0,0,0,0.9),
+    -2px -2px 3px rgba(0,0,0,0.8);
+
+  margin: 0 auto;
+  max-width: 80%;
+  padding: 20px;
+  background: transparent;   /* no overlay */
+  border: none;              /* no border */
+}
+
+/* Keep saved lines visually identical, but you can add subtle marker if needed */
+.lyricLineBtn.lrcSaved {
+  color: #000;               /* same as normal */
+  text-shadow:
+    0 0 3px #fff,
+    0 0 6px rgba(255,255,255,0.9),
+    1px 1px 2px rgba(0,255,224,0.7), /* optional subtle cyan glow */
+    -1px -1px 2px rgba(0,255,224,0.7),
+    2px 2px 3px rgba(0,0,0,0.9),
+    -2px -2px 3px rgba(0,0,0,0.8);
+}
+
+/* Prevent hover/focus/active from changing appearance */
+.lyricLineBtn:hover,
+.lyricLineBtn:focus,
+.lyricLineBtn:active {
+  color: inherit;
+  background: transparent;
+  border: none;
+  text-shadow: inherit;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Contain all hover paints inside the menu frame */
+#contextMenu {
+  position: absolute;
+  display: none;
+  background: rgba(0,0,0,0.85);
+  border: 1px solid #00ffe0;
+  border-radius: 6px;
+  z-index: 9999;
+  overflow: hidden;              /* key: clips hover backgrounds */
+  padding: 6px 0;
+}
+
+/* Ensure internal sizing doesn't overflow the frame */
+#contextMenu, 
+#contextMenu * {
+  box-sizing: border-box;        /* key: width includes padding */
+}
+
+/* Buttons fill width and never bleed */
+#contextMenu button {
+  display: block;
+  width: 100%;
+  margin: 0;                     /* remove any default margins */
+  padding: 6px 12px;
+  background: transparent;
+  color: #00ffe0;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: 'Orbitron', 'Segoe UI', sans-serif;
+  font-size: 14px;
+}
+
+#contextMenu button:hover {
+  background: #00ffe0;
+  color: #111;
+}
+
+#contextMenu button + button {
+  border-top: 1px solid rgba(0,255,224,0.15);
+}
+
+#fontSizeControl {
+  padding: 8px 12px;             /* align with button padding */
+  color: #00ffe0;
+}
+
+#fontSizeControl input[type="range"] {
+  width: 100%;
+  margin: 0;                     /* avoid edge overflow */
+  accent-color: #00ffe0;
+}
+
+#lrcLyrics {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* center */
+  width: auto;
+  text-align: center;
+
+  /* Typography to match normal lyrics */
+  font-family: 'Orbitron', 'Segoe UI', sans-serif;
+  font-weight: 700;            
+  font-size: 20px;              
+  line-height: 1.9;
+  letter-spacing: 0.8px;
+
+  /* Match color and glow of normal lyrics */
+  color: #000; 
+  text-shadow:
+    0 0 3px #fff,  
+    0 0 6px rgba(255,255,255,0.9),
+    1px 1px 2px rgba(255,255,255,0.7),
+    -1px -1px 2px rgba(255,255,255,0.7),
+    2px 2px 3px rgba(0,0,0,0.9),
+    -2px -2px 3px rgba(0,0,0,0.8);
+
+  /* Visual behavior */
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  background: transparent;
+  pointer-events: none;
+}
+
+#lrcLyrics.Lyrics {
+  opacity: 1;
+}

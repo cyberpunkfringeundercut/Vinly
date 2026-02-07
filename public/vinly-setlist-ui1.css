@@ -1,0 +1,129 @@
+/* ---------- Overlay base ---------- */
+.overlaySetlist {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: none;
+  z-index: 10000;
+}
+
+/* ---------- Overlay panel ---------- */
+.overlayPanel {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  background: #111;
+  border: 1px solid #00ffe0;
+  border-radius: 8px;
+  padding: 20px;
+  width: 360px;
+  max-width: 90vw;
+  box-shadow: 0 0 12px rgba(0,255,224,0.5);
+  box-sizing: border-box;
+  opacity: 0;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.overlaySetlist[style*="block"] .overlayPanel {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+/* ---------- Overlay heading ---------- */
+.overlayPanel h3 {
+  margin: 0 0 12px 0;
+  color: #00ffe0;
+  font-weight: 700;
+  text-align: center;
+  text-shadow: 0 0 6px rgba(0,255,224,0.6);
+  font-family: 'Orbitron','Segoe UI',sans-serif;
+}
+
+/* ---------- Setlist list box ---------- */
+.setlistListBox {
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 6px;
+  background: #000;
+  color: #00ffe0;
+  border: 1px solid #00ffe0;
+  border-radius: 6px;
+  font-family: 'Orbitron','Segoe UI',sans-serif;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/* ---------- Textbox for new setlist ---------- */
+.setlistTextBox {
+  display: block;
+  width: 100%;
+  max-width: 90%;
+  margin: 0 auto 16px auto;
+  padding: 8px 12px;
+  border: 1px solid #00ffe0;
+  border-radius: 6px;
+  background: #111;
+  color: #00ffe0;
+  font-family: 'Orbitron','Segoe UI',sans-serif;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/* ---------- Setlist buttons ---------- */
+.setlistBtn {
+  display: inline-block;
+  margin: 4px;
+  padding: 8px 16px;
+  background: transparent;
+  color: #00ffe0;
+  border: 1px solid #00ffe0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Orbitron','Segoe UI',sans-serif;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.setlistBtn:hover {
+  background: #00ffe0;
+  color: #111;
+}
+
+/* ---------- Context menu (Layer 1 & 2) ---------- */
+.layerCtxMenu {
+  position: absolute;
+  display: none;
+  background: rgba(0,0,0,0.95); /* slightly darker for contrast */
+  border: 1px solid #00ffe0;
+  border-radius: 6px;
+  z-index: 9999;
+  overflow: hidden;
+  padding: 6px 0;
+  box-sizing: border-box;
+  min-width: 180px;
+  max-width: 90vw;
+}
+
+.layerCtxMenu button {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 8px 14px;
+  background: #111;            /* solid dark background */
+  color: #00ffe0 !important;   /* force neon cyan text */
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: 'Orbitron','Segoe UI',sans-serif;
+  font-size: 15px;             /* slightly larger for readability */
+}
+
+.layerCtxMenu button:hover {
+  background: #00ffe0;
+  color: #111 !important;      /* invert on hover */
+}
+
+.layerCtxMenu button + button {
+  border-top: 1px solid rgba(0,255,224,0.25);
+}

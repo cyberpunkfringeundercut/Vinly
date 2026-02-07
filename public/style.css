@@ -1,0 +1,281 @@
+/* General page styling */
+body {
+  background: #0e0e12;                /* darker cyberpunk base */
+  font-family: sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+  color: #e0e0e0;
+  overflow-x: hidden;                 /* prevent horizontal scroll */
+  overflow-y: scroll;                 /* always reserve vertical scrollbar */
+}
+
+/* Deck container */
+#deck {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 600px;                   /* responsive, capped at 600px */
+  aspect-ratio: 1 / 1;                /* keep square */
+  margin: 0 auto;
+}
+
+/* Record wrapper spins grooves + cover + sheen */
+#recordWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  animation-name: spin;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-play-state: paused;
+  z-index: 1;
+}
+
+#recordWrapper.playing { animation-play-state: running; }
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Grooves canvas */
+#recordCanvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: block;
+}
+
+/* Center label cover art */
+#cover {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 36%;
+  height: 36%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  box-shadow: 0 0 12px rgba(0,0,0,0.4);
+}
+
+/* Rotating sheen overlay (light refraction effect) */
+#recordWrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 60deg,
+    rgba(255,255,255,0.10) 0deg,
+    rgba(255,255,255,0.00) 90deg,
+    rgba(255,255,255,0.14) 180deg,
+    rgba(255,255,255,0.00) 270deg,
+    rgba(255,255,255,0.10) 360deg
+  );
+  mix-blend-mode: lighten;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0.55;
+}
+
+/* Overlay aligned to recordWrapper (same size) */
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
+}
+
+/* Headshell: pivot around center (matches JS) */
+.headshell {
+  position: absolute;
+  width: 40px;
+  height: 20px;
+  background: #444;
+  border-radius: 4px;
+  transform-origin: center center;
+  box-shadow: 0 0 6px rgba(0,0,0,0.4);
+  z-index: 4;
+}
+
+/* Arm line behind the headshell */
+.headshell::before {
+  content: "";
+  position: absolute;
+  left: -180px;
+  top: calc(50% - 1px);
+  width: 180px;
+  height: 2px;
+  background: #9a9a9a;
+  box-shadow: 0 0 2px rgba(0,0,0,0.3);
+}
+
+/* Needle dot at tip (centered in headshell) */
+#needle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: red;
+  border-radius: 50%;
+  z-index: 5;
+  box-shadow: 0 0 4px rgba(255,0,0,0.6);
+}
+
+/* Cursor visible only when hovering headshell/needle */
+.headshell:hover,
+#needle:hover {
+  cursor: grab;
+}
+.headshell:active,
+#needle:active {
+  cursor: grabbing;
+}
+
+/* Controls BELOW the deck */
+#controls {
+  margin-top: 30px;
+  text-align: center;
+  z-index: 10;                        /* ensure above vinyl layers */
+}
+
+button {
+  margin: 5px;
+  padding: 8px 16px;
+  font-size: 14px;
+  background: linear-gradient(90deg, #0a0a0a, #1a1a1a);
+  border: 1px solid #00ffe0;
+  border-radius: 6px;
+  color: #00ffe0;
+  text-shadow: 0 0 6px rgba(0,255,224,0.8);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: #00ffe0;
+  color: #111;
+  box-shadow: 0 0 12px #00ffe0;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+label {
+  margin: 0 10px;
+  font-size: 14px;
+  color: #00ffe0;
+}
+
+/* Vinyl dark area playlist display */
+#vinylTitle {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  max-height: 200px;
+  overflow-y: auto;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 14px;
+  color: #e8e8e8;
+  pointer-events: auto;
+  z-index: 6;
+}
+
+#vinylTitle .track {
+  opacity: 0.7;
+  margin: 2px 0;
+  cursor: pointer;
+}
+
+#vinylTitle .track.current {
+  opacity: 1;
+  font-weight: bold;
+}
+
+/* Transparent listbox styling without overlay */
+#folderSelect {
+  background: transparent;
+  color: #00ffe0;
+  border: 1px solid rgba(0,255,224,0.4);
+  border-radius: 6px;
+  padding: 4px;
+  outline: none;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+}
+
+/* Options inside listbox */
+#folderSelect option {
+  background: rgba(0,0,0,0.85);
+  color: #e0e0e0;
+}
+
+/* Futuristic scrollbar for listbox */
+#folderSelect::-webkit-scrollbar {
+  width: 8px;
+}
+#folderSelect::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.2);
+  border-radius: 4px;
+}
+#folderSelect::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00ffe0, #0099ff);
+  border-radius: 4px;
+  box-shadow: 0 0 6px rgba(0,255,224,0.6);
+}
+#folderSelect::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #00ffff, #00ccff);
+}
+
+#folderSelect {
+  scrollbar-width: thin;
+  scrollbar-color: #00ffe0 rgba(0,0,0,0.2);
+}
+
+/* ----- Minimalist cyberpunk vertical scrollbar for the page ----- */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00ffe0, #0099ff);
+  border-radius: 6px;
+  box-shadow: 0 0 8px rgba(0,255,224,0.35);
+  border: 1px solid rgba(0,255,224,0.35);
+}
+
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #00ffff, #00ccff);
+  box-shadow: 0 0 10px rgba(0,255,224,0.6);
+}
+
+/* Firefox global scrollbar */
+html, body {
+  scrollbar-width: thin;
+  scrollbar-color: #00ffe0 transparent;
+}
