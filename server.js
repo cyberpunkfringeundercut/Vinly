@@ -785,21 +785,30 @@ app.post('/api/artists/:id/setlist-shuffle', (req, res) => {
   }
 });
 
-// ---------- API: Delete shuffled setlist ----------
-app.delete('/api/artists/:id/setlist-shuffle.txt', (req, res) => {
-  const artistId = req.params.id;
-  const filePath = path.join(ROOT, artistId, 'setlist-shuffle.txt');
+// ---------- API: Save shuffled album setlist ----------
+app.post('/api/albums/:artistId/:albumName/setlist-shuffle', express.json(), (req, res) => {
+  const { artistId, albumName } = req.params;
+  const { text } = req.body;
 
+  if (!text) return res.status(400).json({ error: 'Missing setlist text' });
+
+  const albumPath = path.join(ROOT, artistId, albumName);
+  if (!fs.existsSync(albumPath)) {
+    return res.status(404).json({ error: `Album folder not found: ${artistId}/${albumName}` });
+  }
+
+  const cleaned = text.split('\n')
+    .map(line => line.trim())
+    .filter(line => line && !line.startsWith('#'))
+    .join('\n');
+
+  const filePath = path.join(albumPath, 'setlist-shuffle.txt');
   try {
-    if (!fs.existsSync(filePath)) {
-      return res.status(404).json({ error: 'Setlist shuffle file not found' });
-    }
-
-    fs.unlinkSync(filePath);
+    fs.writeFileSync(filePath, cleaned, 'utf8');
     res.json({ success: true });
   } catch (err) {
-    console.error('Error deleting shuffle setlist:', err);
-    res.status(500).json({ error: 'Failed to delete shuffle setlist' });
+    console.error('Error saving album shuffle setlist:', err);
+    res.status(500).json({ error: 'Failed to save album shuffle setlist' });
   }
 });
 
