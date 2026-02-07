@@ -243,7 +243,6 @@ window.generateAlbumShuffle = async function(albumId) {
   }
 };
 
-
   // ---------- Final global exposure ----------
   window.generateSetlistShuffle = typeof generateSetlistShuffle === 'function'
     ? generateSetlistShuffle
